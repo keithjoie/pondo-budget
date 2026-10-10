@@ -1,28 +1,9 @@
-PONDO — WEEKLY BUDGET TRACKER (PWA)
+PONDO VERSION 8 — WEEKLY BUDGET TRACKER
 
-This package is prepared to be hosted as a Progressive Web App. It is not yet published on the internet or in an app store.
+Files: index.html, service-worker.js, manifest.webmanifest, icons/.
 
-PUBLISH IT FREE WITH GITHUB PAGES
-1. Sign in to GitHub and create a NEW PUBLIC repository named: pondo
-2. Upload all files and folders from this package to the repository root. Make sure index.html, manifest.webmanifest, and service-worker.js are at the root, and keep the icons folder.
-3. In the repository, open Settings > Pages.
-4. Under Build and deployment, select Deploy from a branch; choose the main branch and /(root), then Save.
-5. Wait for GitHub Pages to publish the site. The address will look like https://YOUR-USERNAME.github.io/pondo/ . Use the exact URL shown by GitHub Pages.
-6. Open that HTTPS URL on your phone while online once.
+Install/update: upload the contents of pondo_pwa/ to the repository root on the main branch. Do not delete the existing local website data or uninstall the installed PWA. The app preserves the existing localStorage key pondo-weekly-budget-v1 and migrates Version 7 records on first load.
 
-INSTALL ON IPHONE
-1. Open the published URL in Safari.
-2. Tap Share (square with arrow pointing up).
-3. Choose Add to Home Screen. If shown, enable Open as Web App.
-4. Tap Add.
+Version 8 features: Sunday-Saturday budget weeks; new allowance prompt when a new Sunday is detected; archived week records; hamburger menu without letter labels; manual savings entries (no automatic transfer); calendar List/Grid; full expense history; CSV export for expenses and savings; reset archives the active week rather than deleting history; date-not-set legacy records remain undated until manually assigned.
 
-INSTALL ON ANDROID
-1. Open the published URL in Chrome.
-2. Tap the three-dot menu.
-3. Choose Install app or Add to Home screen, then follow the prompt.
-
-NOTES
-- The app stores budget data in browser localStorage on that device. It does not automatically sync between devices.
-- Offline app shell caching is enabled after the first successful online visit. Test offline behavior before relying on it.
-- Export your expenses periodically as a backup.
-- This is a web app, not a native App Store / Google Play app.
+Important: records remain local to each browser/device. CSV export is recommended before updating. Test using a backup/export before publishing.

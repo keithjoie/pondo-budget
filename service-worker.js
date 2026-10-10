@@ -1,53 +1,5 @@
-const CACHE = 'pondo-budget-v7-local-clock';
+const CACHE = 'pondo-budget-v8-weekly-menu';
 const APP_SHELL = ['./', './index.html', './manifest.webmanifest', './icons/pondo-192.png', './icons/pondo-512.png'];
-
-self.addEventListener('install', event => {
-  event.waitUntil((async () => {
-    const cache = await caches.open(CACHE);
-    // Cache the app shell for offline fallback. The HTML is fetched network-first below.
-    await cache.addAll(APP_SHELL);
-    await self.skipWaiting();
-  })());
-});
-
-self.addEventListener('activate', event => {
-  event.waitUntil((async () => {
-    const keys = await caches.keys();
-    await Promise.all(keys.filter(key => key.startsWith('pondo-budget-') && key !== CACHE).map(key => caches.delete(key)));
-    await self.clients.claim();
-  })());
-});
-
-self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET' || new URL(event.request.url).origin !== self.location.origin) return;
-  const url = new URL(event.request.url);
-  const isHtml = event.request.mode === 'navigate' || url.pathname.endsWith('/index.html') || url.pathname.endsWith('/pondo-budget/');
-  if (isHtml) {
-    event.respondWith((async () => {
-      try {
-        const response = await fetch(event.request, { cache: 'no-store' });
-        if (response && response.ok) {
-          const cache = await caches.open(CACHE);
-          await cache.put(event.request, response.clone());
-          return response;
-        }
-      } catch (_) {}
-      return (await caches.match(event.request)) || (await caches.match('./index.html')) || Response.error();
-    })());
-    return;
-  }
-  event.respondWith((async () => {
-    const cached = await caches.match(event.request);
-    if (cached) return cached;
-    try {
-      const response = await fetch(event.request);
-      if (response && response.ok) {
-        const cache = await caches.open(CACHE);
-        await cache.put(event.request, response.clone());
-      }
-      return response;
-    } catch (_) {
-      return Response.error();
-    }
-  })());
-});
+self.addEventListener('install', event => { event.waitUntil((async()=>{const cache=await caches.open(CACHE);await cache.addAll(APP_SHELL);await self.skipWaiting()})()) });
+self.addEventListener('activate', event => { event.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(key=>key.startsWith('pondo-budget-')&&key!==CACHE).map(key=>caches.delete(key)));await self.clients.claim()})()) });
+self.addEventListener('fetch', event => { if(event.request.method!=='GET'||new URL(event.request.url).origin!==self.location.origin)return;const url=new URL(event.request.url);const isHtml=event.request.mode==='navigate'||url.pathname.endsWith('/index.html')||url.pathname.endsWith('/pondo-budget/');if(isHtml){event.respondWith((async()=>{try{const response=await fetch(event.request,{cache:'no-store'});if(response&&response.ok){const cache=await caches.open(CACHE);await cache.put(event.request,response.clone());return response}}catch(_){}return(await caches.match(event.request))||(await caches.match('./index.html'))||Response.error()})());return}event.respondWith((async()=>{const cached=await caches.match(event.request);if(cached)return cached;try{const response=await fetch(event.request);if(response&&response.ok){const cache=await caches.open(CACHE);await cache.put(event.request,response.clone())}return response}catch(_){return Response.error()}})()) });
