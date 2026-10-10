@@ -1,4 +1,4 @@
-const CACHE = 'pondo-budget-v1';
+const CACHE = 'pondo-budget-v5-friendly';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icons/pondo-192.png', './icons/pondo-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)));
